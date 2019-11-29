@@ -1,5 +1,11 @@
-clear; clc; close all;
+clc;
+close all;
+clear variables; %clear classes;
+rand('state',0); % rand('state',sum(100*clock));
+dbstop if error;
+
 addpath(genpath('./include/'));
+
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Set preliminary parameters
@@ -7,7 +13,7 @@ addpath(genpath('./include/'));
 global doPlot numAPs makeFig finalFig tempFig doGif pLen useClas hardClas map
 
 % parameters for RSSI Generation
-minAPs  = 3;                            % minimum number of APs required 
+minAPs  = 3;                            % minimum number of APs required
 maxAPs  = 10;                           % maximum number of APs allowed
 numAPs  = randi([minAPs maxAPs]);       % number of access points in the map
 freq    = 2.412e9;                      % fequency range of router in Hz
@@ -89,7 +95,7 @@ if doPlot
     title('Radio Inertial Localization');
     xlim([min(0, round(min(path(:,2)))-50), max(size(map, 2),max(path(:,2)))+50]);
     ylim([min(0, round(min(path(:,1)))-50), max(size(map, 1),max(path(:,1)))+50]);
-
+    
     for AP = 1:numAPs
         str = "AP "+num2str(AP);
         text(Tx(AP,2),Tx(AP,1),str,'Color','Red','FontSize',8);
@@ -101,28 +107,28 @@ if doPlot
             text(APLocs(AP,2),APLocs(AP,1),str,'Color','Black','FontSize',8);
         end
     end
-
+    
     for i = 2:length(wayPts)
         plot( [wayPts(i,2) wayPts(i-1,2)], [wayPts(i,1) wayPts(i-1,1)], 'g-o', 'LineWidth', 1.5);
         plot( [path(i,2) path(i-1,2)], [path(i,1) path(i-1,1)], 'b--*', 'LineWidth', 1.5);
-
+        
         drawnow;
         pause(0.3);
-
+        
         if doGif
-            % Capture the plot as an image 
-            frame = getframe(h); 
-            im = frame2im(frame); 
-            [imind,cm] = rgb2ind(im,256); 
-
-            % Write to the GIF File 
+            % Capture the plot as an image
+            frame = getframe(h);
+            im = frame2im(frame);
+            [imind,cm] = rgb2ind(im,256);
+            
+            % Write to the GIF File
             if i == 2
-                imwrite(imind,cm,filename,'gif', 'Loopcount',inf); 
+                imwrite(imind,cm,filename,'gif', 'Loopcount',inf);
             else
                 imwrite(imind,cm,filename,'gif','WriteMode','append');
             end
         end
-
+        
     end
     legend('Ground Truth', 'Localization');
     
