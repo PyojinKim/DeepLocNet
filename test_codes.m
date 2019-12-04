@@ -16,8 +16,9 @@ imshow(map,[]);
 
 
 
+
 figure;
-imshow(StrengthMap(:,:,9),[]);
+imshow(StrengthMap(:,:,8),[]);
 
 
 

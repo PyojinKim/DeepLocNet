@@ -13,37 +13,37 @@ addpath(genpath('./include/'));
 global doPlot numAPs makeFig finalFig tempFig doGif pLen useClas hardClas map
 
 % parameters for RSSI Generation
-minAPs  = 3;                            % minimum number of APs required
-maxAPs  = 10;                           % maximum number of APs allowed
-numAPs  = randi([minAPs maxAPs]);       % number of access points in the map
-freq    = 2.412e9;                      % fequency range of router in Hz
-res     = 30;                           % map resolution (higher the better, but make process slower)
-model   = 2;                            % 1=Free-Space, 2=Motley-Keenan (COST231)
-rand    = 1;                            % random router placement: 1 = true, 0 = false
-debflag = 0;                            % debug flag
+minAPs  = 3;                                 % minimum number of APs required
+maxAPs  = 10;                               % maximum number of APs allowed
+numAPs  = randi([minAPs maxAPs]);  % number of access points in the map
+freq    = 2.412e9;                          % fequency range of router in Hz
+res     = 30;                                  % map resolution (higher the better, but make process slower)
+model   = 2;                                  % 1=Free-Space, 2=Motley-Keenan (COST231)
+rand    = 1;                                   % random router placement: 1 = true, 0 = false
+debflag = 0;                                  % debug flag
 
 % parameters for random walk
-maxIter = 1e8;                          % max iterations for RRT
-start   = [336, 87];                    % start point for random walk
-goal    = [173, 420];                   % goal point for random walk
-step    = 20;                           % stepSize for random walk
+maxIter = 1e8;                              % max iterations for RRT
+start   = [336, 87];                        % start point for random walk
+goal    = [173, 420];                      % goal point for random walk
+step    = 20;                                 % stepSize for random walk
 
 % parameters for localization
-numP    = 100;                          % number of particles for localization
-sigU    = [rand()*20 , rand()*0.25];    % noise in motion in r(in pixels),theta(in rads)
-sigZ    = randi([10 100],1,numAPs);     % noise in measurements (random between 10-100 in pixels)
-senseR  = 15;                           % sensing range of agent (in m) (cannot detect all routers all the time)
-useClas = 1;                            % flag for using or not using classification for LOS/NLOS
-hardClas= 0;                            % hard classification (reject NLOS totally) or soft classification (weight with p)
-slam    = 0;                            % run (1) Particle Filter Localization , (2) Fast SLAM (unknown prior AP map)
+numP    = 100;                              % number of particles for localization
+sigU    = [rand()*20 , rand()*0.25];  % noise in motion in r(in pixels),theta(in rads)
+sigZ    = randi([10 100],1,numAPs);  % noise in measurements (random between 10-100 in pixels)
+senseR  = 15;                               % sensing range of agent (in m) (cannot detect all routers all the time)
+useClas = 1;                                 % flag for using or not using classification for LOS/NLOS
+hardClas= 0;                                 % hard classification (reject NLOS totally) or soft classification (weight with p)
+slam    = 1;                                  % run (1) Particle Filter Localization , (2) Fast SLAM (unknown prior AP map)
 
 % plot parameters
-makeFig = 1;                            % global figure number
-doPlot  = 1;                            % set to 1 if you want to make plot
-finalFig= 2;                            % gif made out of this fig
-tempFig = 3;                            % figure for temporary plotting and debugging (set 3 if on)
-doGif   = 1;                            % set to 1 if you want to make GIF
-pLen    = 0.1;                          % pause length for animation
+makeFig = 1;                                % global figure number
+doPlot  = 1;                                 % set to 1 if you want to make plot
+finalFig= 2;                                  % gif made out of this fig
+tempFig = 3;                                % figure for temporary plotting and debugging (set 3 if on)
+doGif   = 1;                                  % set to 1 if you want to make GIF
+pLen    = 0.1;                               % pause length for animation
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Calculate the WiFi strength Map
